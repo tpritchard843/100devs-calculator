@@ -70,7 +70,7 @@ class Event {
     static captureInput() {
         Event.inputSource.addEventListener('click', (e) => {
             //Check if user clicked on a number and then capture that number as a string
-            if (e.target.className = 'numpad') {
+            if (e.target.className === 'numpad') {
                 //Check if last input was equals. If so, reset calculator for fresh calculation
                 if (Event.inputMemory === 'equate'){
                     Event.reset();
