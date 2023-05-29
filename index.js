@@ -172,3 +172,12 @@ class UI {
         }
     }
 }
+
+//Declare UI variables
+UI.displayBar = document.querySelector('.calc-display');
+UI.displayLimit = 12;
+UI.displayableDecimalTrail;
+
+
+// Listen for input
+Event.init();
