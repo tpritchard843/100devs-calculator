@@ -69,17 +69,21 @@ Calculator.equated;
 class Event {
     static captureInput() {
         Event.inputSource.addEventListener('click', (e) => {
+            
             //Check if user clicked on a number and then capture that number as a string
             if (e.target.className === 'numpad') {
+                
                 //Check if last input was equals. If so, reset calculator for fresh calculation
                 if (Event.inputMemory === 'equate'){
                     Event.reset();
                     Calculator.reset();
                     UIEvent.display(0);
                 }
+
                 //Prevent multiple decimal points
                 //Check if input is a decimal
                 if(/\./.test(e.target.textContent)) {
+
                     // Check if Event.input already has a Decimal to Avoid Multiple Decimal Points
                     if (!(/\./.test(e.target.textContent))) {
                         // Check if user input is within UI Display Limit
@@ -89,6 +93,7 @@ class Event {
                     }
 
                 } else /*If input is a number, it skips the decimal logic */ {
+                    
                     // Check if user input is within UI limit
                     if (Event.inputString.length < UI.displayLimit){
                         Event.inputString += e.target.textContent;
@@ -104,6 +109,7 @@ class Event {
 
             //Check if User clicked on an operator and run operation
             else if (e.target.className === 'key-op' || e.target.className === 'key-eq') {
+                
                 //Prevent same operator from being clicked multiple times
                 if (!(Event.inputMemory === e.target.dataset.action)) {
                     Event.selectedOperator = e.target.dataset.action;
@@ -152,13 +158,17 @@ Event.inputMemory = '';
 class UI {
     static display(value) {
         if (typeof(value) === 'string') {
+            
             //Limit string to display limit of calculator
             UI.displayBar.textContent = value.substring(0, UI.displayLimit);
         } else if (typeof(value) === 'number') {
+            
             //Check if computed number is within display limit
             if (value < ((Math.pow(10, UI.displayLimit))-1)) {
+                
                 // Compute Trailing Decimals That can be shown without UI Overflow
                 UI.displayableDecimalTrail = (UI.displayLimit) - (value.toString().split('.')[0].length);
+                
                 //Limit trailing decimals digits
                 if (value % 1 != 0) {
                     UI.displayBar.textContent = parseFloat(value.toFixed(UI.displayableDecimalTrail)); // parseFloat used to remove insignificant trailing zeros
@@ -166,6 +176,7 @@ class UI {
                     UI.displayBar.textContent = value;
                 }
             } else {
+                
                 // if number is more than UI display limit, show error 'E'
                 UI.displayBar.textContent = 'E';
             }
