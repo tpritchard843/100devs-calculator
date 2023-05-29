@@ -1,18 +1,21 @@
 //your code here
 
 class Calculator {
-    constructor () {
-        this.divide = function() {
-            console.log('divide');
-        }
-        this.multiply = function() {
-            console.log('multiply');
-        }
-        this.add = function() {
-            console.log('add');
-        }
-        this.subtract = function() {
-            console.log('subtract')
-        }
+    static reset(){
+        Calculator.sum = undefined;
+        Calculator.operatorMemory = undefined;
+        Calculator.equated = undefined;
+    }
+    static add(a,b) {
+        return a + b;
+    }
+    static subtract(a,b) {
+        return a - b;
+    }
+    static multiply(a,b) {
+        return a * b;
+    }
+    static divide(a,b) {
+        return a / b;
     }
 }
