@@ -18,4 +18,13 @@ class Calculator {
     static divide(a,b) {
         return a / b;
     }
+
+    static operate(input, operator) {
+
+    }
 }
+
+//Declare Calculator variables
+Calculator.sum;
+Calculator.operatorMemory;
+Calculator.equated;
