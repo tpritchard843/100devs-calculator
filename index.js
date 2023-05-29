@@ -147,3 +147,28 @@ Event.inputSource = document.querySelector('.calc-key');
 Event.inputString = '';
 Event.selectedOperator;
 Event.inputMemory = '';
+
+
+class UI {
+    static display(value) {
+        if (typeof(value) === 'string') {
+            //Limit string to display limit of calculator
+            UI.displayBar.textContent = value.substring(0, UI.displayLimit);
+        } else if (typeof(value) === 'number') {
+            //Check if computed number is within display limit
+            if (value < ((Math.pow(10, UI.displayLimit))-1)) {
+                // Compute Trailing Decimals That can be shown without UI Overflow
+                UI.displayableDecimalTrail = (UI.displayLimit) - (value.toString().split('.')[0].length);
+                //Limit trailing decimals digits
+                if (value % 1 != 0) {
+                    UI.displayBar.textContent = parseFloat(value.toFixed(UI.displayableDecimalTrail)); // parseFloat used to remove insignificant trailing zeros
+                } else {
+                    UI.displayBar.textContent = value;
+                }
+            } else {
+                // if number is more than UI display limit, show error 'E'
+                UI.displayBar.textContent = 'E';
+            }
+        }
+    }
+}
