@@ -65,3 +65,79 @@ class Calculator {
 Calculator.sum;
 Calculator.operatorMemory;
 Calculator.equated;
+
+class Event {
+    static captureInput() {
+        Event.inputSource.addEventListener('click', (e) => {
+            //Check if user clicked on a number and then capture that number as a string
+            if (e.target.className = 'numpad') {
+                //Check if last input was equals. If so, reset calculator for fresh calculation
+                if (Event.inputMemory === 'equate'){
+                    Event.reset();
+                    Calculator.reset();
+                    UIEvent.display(0);
+                }
+                //Prevent multiple decimal points
+                //Check if input is a decimal
+                if(/\./.test(e.target.textContent)) {
+                    // Check if Event.input already has a Decimal to Avoid Multiple Decimal Points
+                    if (!(/\./.test(e.target.textContent))) {
+                        // Check if user input is within UI Display Limit
+                        if (Event.inputString.length < UI.displayLimit){
+                            Event.inputString += e.target.textContent;
+                        }
+                    }
+
+                } else /*If input is a number, it skips the decimal logic */ {
+                    // Check if user input is within UI limit
+                    if (Event.inputString.length < UI.displayLimit){
+                        Event.inputString += e.target.textContent;
+                    }
+                }
+
+                //Display input on UI
+                UI.display(Event.inputString);
+
+                //Since clicked event is numpad, sets input memory as numpad
+                Event.inputMemory = 'number';
+            } 
+
+            //Check if User clicked on an operator and run operation
+            else if (e.target.className === 'key-op' || e.target.className === 'key-eq') {
+                //Prevent same operator from being clicked multiple times
+                if (!(Event.inputMemory === e.target.dataset.action)) {
+                    Event.selectedOperator = e.target.dataset.action;
+
+                    //convert input string to floating point number, run calculation, and display in UI
+                    console.log(Event.inputString, Event.selectedOperator);
+                    UI.display(Calculator.operate(parseFloat(Event.inputString), Event.selectedOperator));
+
+                    //Clear input string
+                    Event.inputString = '';
+
+                    //Save clicked operator to memory
+                    EventCounts.inputMemory = e.target.dataset.action;
+                }
+            }
+
+            //if user clicked on clear reset calculator 
+            else if (e.target.dataset.action === 'clear') {
+                Event.reset();
+                Calculator.reset();
+                UI.display(0);
+            }
+        });
+    }
+    static reset() {
+        Event.inputString = '';
+        Event.selectedOperator = undefined;
+        Event.inputMemory = '';
+    }
+
+    static init() {
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dom loaded');
+            Event.captureInput();
+        })
+    }
+}
