@@ -141,3 +141,9 @@ class Event {
         })
     }
 }
+
+//Declare event variables
+Event.inputSource = document.querySelector('.calc-key');
+Event.inputString = '';
+Event.selectedOperator;
+Event.inputMemory = '';
